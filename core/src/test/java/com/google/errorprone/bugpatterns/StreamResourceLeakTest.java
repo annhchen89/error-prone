@@ -30,8 +30,9 @@ import org.junit.runner.RunWith;
 @RunWith(TestParameterInjector.class)
 public class StreamResourceLeakTest {
 
-  private final CompilationTestHelper testHelper =
-      CompilationTestHelper.newInstance(StreamResourceLeak.class, getClass());
+  private final CompilationTestHelper testHelper() {
+    return CompilationTestHelper.newInstance(StreamResourceLeak.class, getClass());
+  }
 
   @Test
   public void positive(
@@ -50,7 +51,7 @@ public class StreamResourceLeakTest {
             "Files.lines(p).collect(Collectors.joining(\", \"))",
           })
           String buggySnippet) {
-    testHelper
+    testHelper()
         .addSourceLines(
             "Test.java",
             "import java.io.IOException;",
@@ -69,7 +70,7 @@ public class StreamResourceLeakTest {
 
   @Test
   public void negative() {
-    testHelper
+  testHelper()
         .addSourceLines(
             "Test.java",
             """
@@ -170,7 +171,7 @@ public class StreamResourceLeakTest {
 
   @Test
   public void ternary() {
-    testHelper
+  testHelper()
         .addSourceLines(
             "Test.java",
             """
@@ -202,7 +203,7 @@ public class StreamResourceLeakTest {
 
   @Test
   public void returnFromMustBeClosedMethod() {
-    testHelper
+  testHelper()
         .addSourceLines(
             "Test.java",
             """
@@ -224,7 +225,7 @@ public class StreamResourceLeakTest {
 
   @Test
   public void returnFromMustBeClosedMethodWithChaining() {
-    testHelper
+  testHelper()
         .addSourceLines(
             "Test.java",
             """
@@ -300,7 +301,7 @@ public class StreamResourceLeakTest {
 
   @Test
   public void defaultMethod() {
-    testHelper
+  testHelper()
         .addSourceLines(
             "Test.java",
             """
@@ -321,7 +322,7 @@ public class StreamResourceLeakTest {
 
   @Test
   public void record() {
-    testHelper
+    testHelper()
         .addSourceLines(
             "ExampleRecord.java",
             """
